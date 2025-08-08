@@ -202,11 +202,23 @@ function Dashboard({ user, token, onLogout }) {
               </div>
               <div className="recent-expenses-section">
                 <h3>🕒 Recent Expenses</h3>
-                <ExpenseList 
-                  expenses={getRecentExpenses()} 
-                  onDeleteExpense={deleteExpense}
-                  isCompact={true}
-                />
+                {getRecentExpenses().length > 0 ? (
+                  <ExpenseList 
+                    expenses={getRecentExpenses()} 
+                    onDeleteExpense={deleteExpense}
+                    isCompact={true}
+                  />
+                ) : (
+                  <div className="no-recent-expenses">
+                    <p>📝 No expenses yet</p>
+                    <button 
+                      className="quick-add-expense-btn"
+                      onClick={() => setActiveTab('add-expense')}
+                    >
+                      Add your first expense
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
