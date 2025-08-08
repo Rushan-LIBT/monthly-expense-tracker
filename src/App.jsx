@@ -70,25 +70,25 @@ function AppContent() {
 
   if (isLoading) {
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        background: 'linear-gradient(135deg, #7c3aed 0%, #10b981 100%)',
-        color: 'white',
-        flexDirection: 'column',
-        gap: '1rem'
-      }}>
-        <div style={{
-          width: '40px',
-          height: '40px',
-          border: '4px solid rgba(255,255,255,0.3)',
-          borderTop: '4px solid white',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }}></div>
-        <p>Loading...</p>
+      <div className="dashboard-loading">
+        <div className="loading-container-main">
+          <div className="loading-logo">
+            <div className="logo-icon">💰</div>
+            <h1 className="logo-text">Rush Finance</h1>
+          </div>
+          
+          <div className="loading-animation">
+            <div className="loading-bars">
+              <div className="bar bar-1"></div>
+              <div className="bar bar-2"></div>
+              <div className="bar bar-3"></div>
+              <div className="bar bar-4"></div>
+              <div className="bar bar-5"></div>
+            </div>
+          </div>
+          
+          <p className="loading-text-main">Preparing your financial dashboard...</p>
+        </div>
       </div>
     )
   }

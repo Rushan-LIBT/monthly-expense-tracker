@@ -114,13 +114,13 @@ function Dashboard({ user, token, onLogout }) {
     <div className="dashboard">
       <div className="dashboard-header">
         <div className="dashboard-title">
-          <h1>💰 Rush Finance Dashboard</h1>
+          <h1>Rush Finance</h1>
           <p>Welcome back, <span className="user-highlight">{currentUser.username}</span>!</p>
         </div>
         <div className="dashboard-actions">
           <ThemeToggle />
           <button className="logout-btn-dashboard" onClick={onLogout}>
-            <span>🚪</span> Logout
+            <span>🚪</span>
           </button>
         </div>
       </div>
