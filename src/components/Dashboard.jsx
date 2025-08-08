@@ -112,16 +112,35 @@ function Dashboard({ user, token, onLogout }) {
 
   return (
     <div className="dashboard">
-      <div className="dashboard-header">
-        <div className="dashboard-title">
-          <h1>Rush Finance</h1>
-          <p>Welcome back, <span className="user-highlight">{currentUser.username}</span>!</p>
-        </div>
-        <div className="dashboard-actions">
-          <ThemeToggle />
-          <button className="logout-btn-dashboard" onClick={onLogout}>
-            <span>🚪</span>
-          </button>
+      <div className="dashboard-header-new">
+        <div className="header-card">
+          <div className="header-left">
+            <div className="brand-section">
+              <div className="brand-icon">💰</div>
+              <div className="brand-info">
+                <h1 className="brand-title">Rush Finance</h1>
+                <p className="brand-subtitle">Financial Dashboard</p>
+              </div>
+            </div>
+          </div>
+          <div className="header-center">
+            <div className="user-greeting">
+              <div className="greeting-icon">👋</div>
+              <div className="greeting-text">
+                <span className="greeting-welcome">Welcome back</span>
+                <span className="greeting-name">{currentUser.username}</span>
+              </div>
+            </div>
+          </div>
+          <div className="header-right">
+            <div className="header-controls">
+              <ThemeToggle />
+              <button className="logout-btn-new" onClick={onLogout}>
+                <span className="logout-icon">🚪</span>
+                <span className="logout-text">Logout</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
