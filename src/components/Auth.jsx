@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import axios from 'axios'
+import ThemeToggle from './ThemeToggle'
 
-const API_URL = 'http://localhost:5000/api'
+const API_URL = 'http://localhost:3001/api'
 
 function Auth({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true)
@@ -47,55 +48,113 @@ function Auth({ onLogin }) {
   return (
     <div className="auth-container">
       <div className="auth-form">
-        <h2>{isLogin ? 'Login' : 'Register'}</h2>
+        <ThemeToggle isAuth={true} />
         
-        {error && <div className="error-message">{error}</div>}
+        <div className="auth-form-header">
+          <h2>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
+          <p className="auth-form-subtitle">
+            {isLogin 
+              ? 'Sign in to continue managing your finances' 
+              : 'Join thousands who trust us with their expense tracking'
+            }
+          </p>
+        </div>
+
+        {error && (
+          <div className="error-message" style={{
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            color: '#f87171',
+            backdropFilter: 'blur(10px)',
+            borderRadius: 'var(--radius-xl)',
+            padding: 'var(--spacing-md)',
+            marginBottom: 'var(--spacing-lg)',
+            textAlign: 'center',
+            fontWeight: '500'
+          }}>
+            {error}
+          </div>
+        )}
         
         <form onSubmit={handleSubmit}>
           {!isLogin && (
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
+            <div className="form-group-auth">
+              <input
+                type="text"
+                name="username"
+                placeholder="Enter your username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+                className="form-input-auth"
+              />
+              <span className="input-icon">👤</span>
+            </div>
           )}
           
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <div className="form-group-auth">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="form-input-auth"
+            />
+            <span className="input-icon">📧</span>
+          </div>
           
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+          <div className="form-group-auth">
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="form-input-auth"
+            />
+            <span className="input-icon">🔒</span>
+          </div>
           
-          <button type="submit" disabled={loading}>
-            {loading ? 'Loading...' : (isLogin ? 'Login' : 'Register')}
+          <button type="submit" disabled={loading} className="auth-submit-btn">
+            {loading ? (
+              <span className="loading-auth">
+                <span className="loading-spinner-auth"></span>
+                {isLogin ? 'Signing In...' : 'Creating Account...'}
+              </span>
+            ) : (
+              isLogin ? 'Sign In' : 'Create Account'
+            )}
           </button>
         </form>
+
+        <div className="auth-divider">
+          <span>or</span>
+        </div>
         
-        <p>
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
+        <div className="auth-switch">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button 
             type="button" 
-            className="link-button"
+            className="auth-link-btn"
             onClick={() => setIsLogin(!isLogin)}
           >
-            {isLogin ? 'Register' : 'Login'}
+            {isLogin ? 'Sign Up' : 'Sign In'}
           </button>
-        </p>
+        </div>
+
+        {isLogin && (
+          <div style={{ 
+            textAlign: 'center', 
+            marginTop: 'var(--spacing-lg)',
+            color: 'rgba(248, 250, 252, 0.6)',
+            fontSize: 'var(--font-size-xs)'
+          }}>
+            <p>Demo Account: rushan@example.com | password123</p>
+          </div>
+        )}
       </div>
     </div>
   )

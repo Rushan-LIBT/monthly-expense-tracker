@@ -6,31 +6,58 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow all localhost origins for development
+    if (!origin || origin.startsWith('http://localhost:')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/expense-tracker')
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/FinanceDB')
+  .then(() => {
+    console.log('Connected to MongoDB Atlas - Cluster0/FinanceDB');
+    console.log('Database:', mongoose.connection.db.databaseName);
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    console.error('Please check your .env file and MongoDB credentials');
+  });
 
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
     unique: true,
+    trim: true,
+    minlength: 3,
+    maxlength: 30
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    trim: true,
+    lowercase: true
   },
   password: {
     type: String,
     required: true,
+    minlength: 6
   },
-}, { timestamps: true });
+}, { 
+  timestamps: true,
+  collection: 'users'
+});
 
 const ExpenseSchema = new mongoose.Schema({
   userId: {
@@ -41,20 +68,32 @@ const ExpenseSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
+    trim: true,
+    maxlength: 200
   },
   amount: {
     type: Number,
     required: true,
+    min: 0
   },
   category: {
     type: String,
     required: true,
+    enum: ['Food', 'Transportation', 'Entertainment', 'Utilities', 'Healthcare', 'Shopping', 'Other']
   },
   date: {
     type: Date,
     required: true,
   },
-}, { timestamps: true });
+  monthlySalary: {
+    type: Number,
+    default: null,
+    min: 0
+  },
+}, { 
+  timestamps: true,
+  collection: 'FinanceData'
+});
 
 const User = mongoose.model('User', UserSchema);
 const Expense = mongoose.model('Expense', ExpenseSchema);
@@ -104,12 +143,20 @@ app.post('/api/register', async (req, res) => {
       { expiresIn: '7d' }
     );
 
+    // Get salary from FinanceData collection
+    const expenseWithSalary = await Expense.findOne({
+      userId: user._id,
+      monthlySalary: { $exists: true, $ne: null }
+    });
+    const monthlySalary = expenseWithSalary ? expenseWithSalary.monthlySalary : 0;
+
     res.status(201).json({
       token,
       user: {
         id: user._id,
         username: user.username,
         email: user.email,
+        monthlySalary: monthlySalary,
       },
     });
   } catch (error) {
@@ -137,12 +184,20 @@ app.post('/api/login', async (req, res) => {
       { expiresIn: '7d' }
     );
 
+    // Get salary from FinanceData collection
+    const expenseWithSalary = await Expense.findOne({
+      userId: user._id,
+      monthlySalary: { $exists: true, $ne: null }
+    });
+    const monthlySalary = expenseWithSalary ? expenseWithSalary.monthlySalary : 0;
+
     res.json({
       token,
       user: {
         id: user._id,
         username: user.username,
         email: user.email,
+        monthlySalary: monthlySalary,
       },
     });
   } catch (error) {
@@ -152,7 +207,9 @@ app.post('/api/login', async (req, res) => {
 
 app.get('/api/expenses', authenticateToken, async (req, res) => {
   try {
-    const expenses = await Expense.find({ userId: req.user.userId }).sort({ date: -1 });
+    const expenses = await Expense.find({ 
+      userId: req.user.userId
+    }).sort({ date: -1 });
     res.json(expenses);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -163,12 +220,20 @@ app.post('/api/expenses', authenticateToken, async (req, res) => {
   try {
     const { description, amount, category, date } = req.body;
 
+    // Get current salary to include in the new expense record
+    const existingExpenseWithSalary = await Expense.findOne({
+      userId: req.user.userId,
+      monthlySalary: { $exists: true, $ne: null }
+    });
+    const currentSalary = existingExpenseWithSalary ? existingExpenseWithSalary.monthlySalary : null;
+
     const expense = new Expense({
       userId: req.user.userId,
       description,
       amount,
       category,
       date,
+      monthlySalary: currentSalary
     });
 
     await expense.save();
@@ -191,6 +256,121 @@ app.delete('/api/expenses/:id', authenticateToken, async (req, res) => {
 
     res.json({ message: 'Expense deleted successfully' });
   } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Get user profile with salary from FinanceData
+app.get('/api/profile', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Get salary from any FinanceData record for this user
+    const expenseWithSalary = await Expense.findOne({
+      userId: req.user.userId,
+      monthlySalary: { $exists: true, $ne: null }
+    });
+
+    const monthlySalary = expenseWithSalary ? expenseWithSalary.monthlySalary : 0;
+
+    res.json({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      monthlySalary: monthlySalary,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Update monthly salary in FinanceData collection
+app.put('/api/salary', authenticateToken, async (req, res) => {
+  try {
+    console.log('Salary update request received:', {
+      userId: req.user.userId,
+      body: req.body,
+      monthlySalary: req.body.monthlySalary,
+      type: typeof req.body.monthlySalary
+    });
+    
+    const { monthlySalary } = req.body;
+
+    if (typeof monthlySalary !== 'number' || monthlySalary < 0) {
+      console.log('Invalid salary value:', { monthlySalary, type: typeof monthlySalary });
+      return res.status(400).json({ message: 'Monthly salary must be a positive number' });
+    }
+
+    console.log('Looking for user with ID:', req.user.userId);
+    
+    // First verify user exists - handle both ObjectId and string formats
+    console.log('Looking for user with ID:', req.user.userId, 'Type:', typeof req.user.userId);
+    
+    let user;
+    try {
+      // Try direct lookup first
+      user = await User.findById(req.user.userId).select('-password');
+      
+      // If not found and it's a string, try converting to ObjectId
+      if (!user && typeof req.user.userId === 'string') {
+        user = await User.findById(new mongoose.Types.ObjectId(req.user.userId)).select('-password');
+      }
+      
+      // If still not found, try finding by the old file-based ID format
+      if (!user) {
+        user = await User.findOne({ username: req.user.username }).select('-password');
+        console.log('Fallback: Found user by username:', user ? user._id : 'NOT FOUND');
+      }
+      
+    } catch (error) {
+      console.log('Error finding user:', error.message);
+    }
+    
+    if (!user) {
+      console.log('User not found with any method. Token userId:', req.user.userId);
+      return res.status(404).json({ message: 'User not found. Please login again.' });
+    }
+    
+    console.log('✅ User found:', user.username, 'ID:', user._id);
+
+    // Update monthlySalary field for all records of this user in FinanceData collection
+    // Use the found user's actual MongoDB _id
+    const updateResult = await Expense.updateMany(
+      { userId: user._id },
+      { $set: { monthlySalary: monthlySalary } }
+    );
+
+    console.log('Salary field updated in FinanceData:', {
+      userId: user._id,
+      newSalary: monthlySalary,
+      modifiedCount: updateResult.modifiedCount
+    });
+
+    // If user has no expense records yet, create a placeholder record with salary
+    if (updateResult.matchedCount === 0) {
+      const placeholderRecord = new Expense({
+        userId: user._id, // Use the correct user._id
+        description: 'Initial Setup - Monthly Salary',
+        amount: 0,
+        category: 'Other',
+        date: new Date(),
+        monthlySalary: monthlySalary
+      });
+      await placeholderRecord.save();
+      console.log('Created placeholder record with salary:', placeholderRecord._id);
+    }
+
+    res.json({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      monthlySalary: monthlySalary,
+    });
+  } catch (error) {
+    console.error('Update salary error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
