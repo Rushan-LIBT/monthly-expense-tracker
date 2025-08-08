@@ -1189,10 +1189,10 @@ body {
   color: var(--primary-color);
 }
 
-/* Main Dashboard Container */
+/* Main Dashboard Container - More Flexible */
 .dashboard {
   width: 100%;
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0;
   background: var(--background);
@@ -1201,13 +1201,32 @@ body {
   flex-direction: column;
 }
 
-/* Dashboard Content Area */
+@media (min-width: 1400px) {
+  .dashboard {
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .dashboard {
+    max-width: 1400px;
+  }
+}
+
+/* Dashboard Content Area - Flexible Padding */
 .dashboard-content {
   flex: 1;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-lg) clamp(var(--spacing-md), 5vw, var(--spacing-2xl));
   max-width: 100%;
   overflow-x: hidden;
   animation: fadeIn 0.5s ease-out;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: var(--spacing-md);
+    padding-bottom: 100px;
+  }
 }
 
 .dashboard-header {
@@ -1319,12 +1338,37 @@ body {
   animation: fadeIn 0.5s ease-out;
 }
 
-/* Summary Cards */
+/* Summary Cards - More Flexible */
 .summary-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-2xl);
+}
+
+@media (min-width: 1200px) {
+  .summary-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 900px) {
+  .summary-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) and (min-width: 600px) {
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
 }
 
 .summary-card {
@@ -1368,7 +1412,12 @@ body {
   top: var(--spacing-lg);
   right: var(--spacing-lg);
   font-size: var(--font-size-3xl);
-  opacity: 0.1;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.summary-card:hover .card-icon {
+  opacity: 0.9;
 }
 
 .summary-card .card-content {
@@ -1473,13 +1522,25 @@ body {
   min-height: 0;
 }
 
-/* Overview Grid */
+/* Overview Grid - More Flexible Layout */
 .overview-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: minmax(500px, 1.5fr) minmax(400px, 1fr);
   gap: var(--spacing-xl);
   width: 100%;
   align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .overview-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .overview-chart-section,
@@ -1490,7 +1551,68 @@ body {
   border: 1px solid var(--border-color);
   overflow: hidden;
   padding: var(--spacing-lg);
-  min-height: 400px;
+  min-height: fit-content;
+}
+
+.overview-chart-section {
+  min-height: 450px;
+}
+
+.recent-expenses-section {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  max-height: none;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.expense-count {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  background: var(--surface-secondary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-lg);
+}
+
+.scrollable-expenses {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 500px;
+  padding-right: var(--spacing-xs);
+}
+
+.scrollable-expenses::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-expenses::-webkit-scrollbar-track {
+  background: var(--background);
+  border-radius: 3px;
+}
+
+.scrollable-expenses::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.scrollable-expenses::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
 .overview-chart-section {

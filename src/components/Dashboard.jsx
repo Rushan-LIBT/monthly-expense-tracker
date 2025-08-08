@@ -93,7 +93,8 @@ function Dashboard({ user, token, onLogout }) {
   }
 
   const getRecentExpenses = () => {
-    return expenses.slice(0, 5)
+    // Show all expenses on desktop, limit on mobile
+    return expenses
   }
 
   const handleSalaryUpdate = (updatedUser) => {
@@ -201,13 +202,18 @@ function Dashboard({ user, token, onLogout }) {
                 />
               </div>
               <div className="recent-expenses-section">
-                <h3>🕒 Recent Expenses</h3>
+                <div className="section-header">
+                  <h3>🕒 All Expenses</h3>
+                  <span className="expense-count">({getRecentExpenses().length} total)</span>
+                </div>
                 {getRecentExpenses().length > 0 ? (
-                  <ExpenseList 
-                    expenses={getRecentExpenses()} 
-                    onDeleteExpense={deleteExpense}
-                    isCompact={true}
-                  />
+                  <div className="scrollable-expenses">
+                    <ExpenseList 
+                      expenses={getRecentExpenses()} 
+                      onDeleteExpense={deleteExpense}
+                      isCompact={false}
+                    />
+                  </div>
                 ) : (
                   <div className="no-recent-expenses">
                     <p>📝 No expenses yet</p>
