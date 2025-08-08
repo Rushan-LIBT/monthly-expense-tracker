@@ -141,6 +141,31 @@ function Dashboard({ user, token, onLogout }) {
       <div className="dashboard-content">
         {activeTab === 'overview' && (
           <div className="overview-tab">
+            {/* Mobile Quick Actions */}
+            <div className="mobile-quick-actions">
+              <button 
+                className="quick-action-btn" 
+                onClick={() => setActiveTab('add-expense')}
+              >
+                <span className="icon">➕</span>
+                <span>Add Expense</span>
+              </button>
+              <button 
+                className="quick-action-btn" 
+                onClick={() => setActiveTab('budget')}
+              >
+                <span className="icon">💰</span>
+                <span>Salary</span>
+              </button>
+              <button 
+                className="quick-action-btn" 
+                onClick={() => setActiveTab('analytics')}
+              >
+                <span className="icon">📊</span>
+                <span>Analytics</span>
+              </button>
+            </div>
+            
             <SummaryCards 
               totalExpenses={getTotalExpenses()}
               monthlyExpenses={getExpensesByMonth()}

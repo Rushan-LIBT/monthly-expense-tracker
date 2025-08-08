@@ -1391,6 +1391,11 @@ body {
   margin: 0;
 }
 
+/* Mobile Quick Actions - Hidden on Desktop */
+.mobile-quick-actions {
+  display: none;
+}
+
 /* Overview Grid */
 .overview-grid {
   display: grid;
@@ -1888,48 +1893,135 @@ body {
   }
   
   .dashboard {
-    padding: var(--spacing-sm);
+    padding: 0;
     width: 100%;
     max-width: 100%;
     margin: 0;
     min-height: 100vh;
-    /* Ensure dashboard starts at top */
-    padding-top: var(--spacing-md);
+    background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
   }
   
+  /* Mobile Header Redesign */
   .dashboard-header {
-    flex-direction: column;
-    gap: var(--spacing-md);
-    text-align: center;
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-    /* Ensure header is visible on mobile */
-    position: relative;
-    z-index: 1;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-title {
+    text-align: left;
   }
   
   .dashboard-title h1 {
-    font-size: var(--font-size-2xl);
-    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-xl);
+    margin: 0 0 var(--spacing-xs) 0;
+    font-weight: 700;
+    color: white;
+  }
+  
+  .dashboard-title p {
+    font-size: var(--font-size-sm);
+    margin: 0;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.95);
   }
   
   .dashboard-actions {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
     align-items: center;
   }
   
-  .summary-cards {
-    grid-template-columns: 1fr;
+  /* Mobile Content Area */
+  .dashboard-content {
+    padding: var(--spacing-md);
+    padding-bottom: 100px; /* Account for bottom navigation */
   }
   
+  /* Mobile Summary Cards */
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .summary-card {
+    padding: var(--spacing-md);
+    margin: 0;
+  }
+  
+  .summary-card .card-value {
+    font-size: var(--font-size-xl);
+  }
+  
+  .summary-card .card-icon {
+    font-size: var(--font-size-xl);
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+  
+  /* Mobile Overview Grid */
+  .overview-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  
+  .overview-chart-section {
+    order: 2;
+    padding: var(--spacing-md);
+  }
+  
+  .recent-expenses-section {
+    order: 1;
+    padding: var(--spacing-md);
+  }
+  
+  .recent-expenses-section h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  /* Mobile Form Styles */
   .form-row {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
   }
   
   .category-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+  
+  /* Mobile Tab Content Spacing */
+  .add-expense-tab,
+  .analytics-tab,
+  .budget-tab,
+  .expenses-tab {
+    padding: var(--spacing-md);
+  }
+  
+  /* Mobile Budget Grid */
+  .budget-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  
+  .salary-section {
+    order: 1;
+  }
+  
+  .budget-overview {
+    order: 2;
   }
   
   /* MOBILE NAVIGATION OPTION 1: Bottom Tab Bar (iOS/Android Style) - CURRENT */
@@ -2058,7 +2150,73 @@ body {
     opacity: 0.8;
   }
   
-  /* Add bottom padding to dashboard content to account for fixed bottom nav */
+  /* Mobile Expense Cards */
+  .expense-item-modern {
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    border-radius: var(--radius-lg);
+  }
+  
+  .expense-primary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  
+  .expense-amount {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+  }
+  
+  /* Mobile Charts */
+  .chart-container {
+    height: 250px !important;
+  }
+  
+  /* Mobile Analytics */
+  .analytics-tab .charts-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  /* Mobile Quick Actions */
+  .mobile-quick-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(10px);
+  }
+  
+  .quick-action-btn {
+    flex: 1;
+    padding: var(--spacing-sm);
+    border: none;
+    border-radius: var(--radius-lg);
+    background: var(--background);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .quick-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .quick-action-btn .icon {
+    font-size: var(--font-size-lg);
+  }
+  
+  /* Add bottom padding to dashboard for fixed bottom nav */
   .dashboard {
     padding-bottom: 90px;
   }
@@ -2085,6 +2243,20 @@ body {
   [data-theme="dark"] .tab-btn.active .tab-label {
     color: white;
     opacity: 1;
+  }
+  
+  /* Dark mode mobile header */
+  [data-theme="dark"] .dashboard-header {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+  }
+  
+  [data-theme="dark"] .mobile-quick-actions {
+    background: rgba(30, 41, 59, 0.5);
+  }
+  
+  [data-theme="dark"] .quick-action-btn {
+    background: var(--dark-surface);
+    color: var(--dark-text-primary);
   }
   
   .expense-item-modern {
@@ -2461,6 +2633,73 @@ body {
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
   font-weight: 500;
+}
+
+/* Extra Small Mobile Screens */
+@media (max-width: 480px) {
+  .dashboard-title h1 {
+    font-size: var(--font-size-lg);
+  }
+  
+  .dashboard-title p {
+    font-size: var(--font-size-xs);
+  }
+  
+  .dashboard-actions {
+    position: static;
+    margin-top: var(--spacing-sm);
+    justify-content: center;
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    padding: var(--spacing-md);
+  }
+  
+  .summary-cards {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  .summary-card {
+    padding: var(--spacing-sm);
+  }
+  
+  .summary-card .card-value {
+    font-size: var(--font-size-lg);
+  }
+  
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .mobile-quick-actions {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .quick-action-btn {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .expense-form-modern {
+    padding: var(--spacing-sm);
+  }
+  
+  .tab-btn {
+    min-width: 50px;
+    padding: 6px 2px;
+  }
+  
+  .tab-icon {
+    font-size: var(--font-size-md);
+  }
+  
+  .tab-label {
+    font-size: 10px;
+  }
 }
 
 .salary-display {
