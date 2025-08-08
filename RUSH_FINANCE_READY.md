@@ -30,8 +30,8 @@
 
 ### **Web Service (Backend):**
 ```
-Name: rush-finance-api
-URL: https://rush-finance-api.onrender.com
+Name: finance-backend-iela (ALREADY DEPLOYED)
+URL: https://finance-backend-iela.onrender.com
 Description: Rush Finance Backend API - Expense tracking with MongoDB
 ```
 
@@ -44,7 +44,7 @@ Description: Rush Finance - Smart expense tracking app
 
 ### **Environment Variables:**
 ```
-VITE_API_URL = https://rush-finance-api.onrender.com/api
+VITE_API_URL = https://finance-backend-iela.onrender.com/api
 ```
 
 ---
@@ -54,7 +54,7 @@ VITE_API_URL = https://rush-finance-api.onrender.com/api
 rush-finance/
 ├── index.html           # 🏦 "Rush Finance - Smart Expense Tracking"
 ├── src/
-│   ├── config/api.js    # 🌐 https://rush-finance-api.onrender.com
+│   ├── config/api.js    # 🌐 https://finance-backend-iela.onrender.com
 │   └── components/
 │       └── Dashboard.jsx # 💰 "Rush Finance Dashboard"
 ├── backend/
@@ -92,7 +92,7 @@ git push -u origin main
 
 ### **Your Rush Finance App:**
 - 🏦 **Frontend**: `https://rush-finance-app.onrender.com`
-- 🔧 **API**: `https://rush-finance-api.onrender.com`
+- 🔧 **API**: `https://finance-backend-iela.onrender.com` ✅ DEPLOYED
 
 ### **Features with Rush Finance Branding:**
 - 🔐 Login page with Rush Finance styling

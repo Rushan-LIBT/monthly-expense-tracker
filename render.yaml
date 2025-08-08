@@ -1,7 +1,7 @@
 services:
-  # Backend API Service
+  # Backend API Service (Already deployed at finance-backend-iela.onrender.com)
   - type: web
-    name: rush-finance-api
+    name: finance-backend-iela
     env: node
     region: oregon
     buildCommand: cd backend && npm install
@@ -17,10 +17,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        fromService:
-          type: web
-          name: rush-finance-app
-          property: host
+        value: https://rush-finance-app.onrender.com
 
   # Frontend Static Site
   - type: web
@@ -31,7 +28,4 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: rush-finance-api
-          envVarKey: RENDER_EXTERNAL_URL
+        value: https://finance-backend-iela.onrender.com/api

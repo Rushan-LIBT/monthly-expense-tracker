@@ -62,7 +62,7 @@ This guide will help you deploy your Rush Finance app to Render with both backen
 5. **Deploy Backend:**
    - Click "Create Web Service"
    - Wait for deployment (5-10 minutes)
-   - Copy your backend URL (e.g., `https://monthly-expense-tracker-api.onrender.com`)
+   - Your backend URL: `https://finance-backend-iela.onrender.com`
 
 ### Step 3: Deploy Frontend to Render
 
@@ -83,9 +83,8 @@ This guide will help you deploy your Rush Finance app to Render with both backen
 3. **Set Environment Variables:**
    Add this environment variable:
    ```
-   VITE_API_URL = https://YOUR-BACKEND-URL.onrender.com/api
+   VITE_API_URL = https://finance-backend-iela.onrender.com/api
    ```
-   Replace `YOUR-BACKEND-URL` with your actual backend URL from Step 2.
 
 4. **Deploy Frontend:**
    - Click "Create Static Site"
@@ -105,8 +104,8 @@ If you encounter CORS errors, update your backend environment variables:
 ## 🎯 Final Configuration
 
 ### Your Deployed URLs:
-- **Backend API**: `https://monthly-expense-tracker-api.onrender.com`
-- **Frontend App**: `https://monthly-expense-tracker-app.onrender.com`
+- **Backend API**: `https://finance-backend-iela.onrender.com`
+- **Frontend App**: `https://rush-finance-app.onrender.com`
 
 ### Test Your Deployment:
 1. Visit your frontend URL
@@ -120,12 +119,12 @@ If you encounter CORS errors, update your backend environment variables:
 MONGODB_URI=mongodb+srv://rushan:rushan1234@cluster0.sluz1rc.mongodb.net/FinanceDB?retryWrites=true&w=majority&appName=Cluster0
 JWT_SECRET=expense-tracker-secret-key-2024
 NODE_ENV=production
-FRONTEND_URL=https://your-frontend-app.onrender.com
+FRONTEND_URL=https://rush-finance-app.onrender.com
 ```
 
 ### Frontend (Render Environment):
 ```env
-VITE_API_URL=https://your-backend-api.onrender.com/api
+VITE_API_URL=https://finance-backend-iela.onrender.com/api
 ```
 
 ## ⚡ Performance Notes

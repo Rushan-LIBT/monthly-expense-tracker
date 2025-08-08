@@ -60,9 +60,9 @@ Add **1 variable** (⚠️ **IMPORTANT**: Replace with YOUR actual backend URL):
 
 | Key | Value |
 |-----|-------|
-| `VITE_API_URL` | `https://rush-finance-api.onrender.com/api` |
+| `VITE_API_URL` | `https://finance-backend-iela.onrender.com/api` |
 
-⚠️ **Note**: You'll get the actual backend URL after deploying the Web Service first.
+✅ **Note**: This is your actual deployed backend URL.
 
 ### Auto-Deploy:
 ```
@@ -76,7 +76,7 @@ Add **1 variable** (⚠️ **IMPORTANT**: Replace with YOUR actual backend URL):
 ### Step 1: Deploy Backend (Web Service) FIRST
 1. Use Web Service inputs above
 2. Wait for deployment to complete
-3. **Copy the backend URL** (e.g., `https://rush-finance-api.onrender.com`)
+3. **Your backend URL**: `https://finance-backend-iela.onrender.com`
 
 ### Step 2: Deploy Frontend (Static Site) SECOND  
 1. Use Static Site inputs above
@@ -112,7 +112,7 @@ Add **1 variable** (⚠️ **IMPORTANT**: Replace with YOUR actual backend URL):
 ## 🎯 Expected Results:
 
 After both deployments:
-- **Backend URL**: `https://rush-finance-api.onrender.com`
+- **Backend URL**: `https://finance-backend-iela.onrender.com`
 - **Frontend URL**: `https://rush-finance-app.onrender.com`
 - **Test Login**: `rushan@libt.co.uk` / `password123`
 
