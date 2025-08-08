@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import LoadingSpinner from './LoadingSpinner'
 
 const ExpenseForm = ({ onAddExpense, loading }) => {
   const [description, setDescription] = useState('')
@@ -129,10 +130,7 @@ const ExpenseForm = ({ onAddExpense, loading }) => {
           className="submit-btn-modern"
         >
           {loading ? (
-            <span className="loading-modern">
-              <span className="loading-spinner-modern"></span>
-              Adding Expense...
-            </span>
+            <LoadingSpinner type="modern" size="medium" text="Adding Expense..." />
           ) : (
             <>
               <span className="btn-icon">✨</span>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import LoadingSpinner from './LoadingSpinner'
 import { API_URL } from '../config/api'
 
 const SalaryManager = ({ user, token, onSalaryUpdate }) => {
@@ -113,10 +114,11 @@ const SalaryManager = ({ user, token, onSalaryUpdate }) => {
               className="save-salary-btn"
             >
               {loading ? (
-                <span className="loading-salary">
-                  <span className="loading-spinner"></span>
-                  Saving...
-                </span>
+                <LoadingSpinner 
+                  type="salary" 
+                  size="small" 
+                  text="Saving..." 
+                />
               ) : (
                 <>
                   <span>💾</span> Save Salary

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import ThemeToggle from './ThemeToggle'
+import LoadingSpinner from './LoadingSpinner'
 import { API_URL } from '../config/api'
 
 function Auth({ onLogin }) {
@@ -119,10 +120,11 @@ function Auth({ onLogin }) {
           
           <button type="submit" disabled={loading} className="auth-submit-btn">
             {loading ? (
-              <span className="loading-auth">
-                <span className="loading-spinner-auth"></span>
-                {isLogin ? 'Signing In...' : 'Creating Account...'}
-              </span>
+              <LoadingSpinner 
+                type="auth" 
+                size="medium" 
+                text={isLogin ? 'Signing In...' : 'Creating Account...'} 
+              />
             ) : (
               isLogin ? 'Sign In' : 'Create Account'
             )}
