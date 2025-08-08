@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1754640802283",
+    "username": "testuser",
+    "email": "test@test.com",
+    "password": "$2b$10$3YcsRBe8T5HDmkaA8TqapuEPf6/nU1mKzLg2PQfo01xkfEyvO7xjq",
+    "createdAt": "2025-08-08T08:13:22.283Z"
+  },
+  {
+    "id": "1754640842788",
+    "username": "rushan",
+    "email": "rushan@libt.co.uk",
+    "password": "$2b$10$NYs1dFwAGHuzbdVvSJYr2OMu5z9YXpQpmyl56tgdZ0gqCTncWGZhe",
+    "createdAt": "2025-08-08T08:14:02.788Z"
+  }
+]
