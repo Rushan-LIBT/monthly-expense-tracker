@@ -103,11 +103,11 @@ function Dashboard({ user, token, onLogout }) {
   }
 
   const tabs = [
-    { id: 'overview', label: '📊 Overview', icon: '📊' },
-    { id: 'analytics', label: '📈 Analytics', icon: '📈' },
-    { id: 'budget', label: '💰 Budget', icon: '💰' },
-    { id: 'add-expense', label: '➕ Add Expense', icon: '➕' },
-    { id: 'expenses', label: '📝 All Expenses', icon: '📝' }
+    { id: 'overview', label: 'Overview', icon: '📊' },
+    { id: 'analytics', label: 'Analytics', icon: '📈' },
+    { id: 'budget', label: 'Budget', icon: '💰' },
+    { id: 'add-expense', label: 'Add', icon: '➕' },
+    { id: 'expenses', label: 'Expenses', icon: '📝' }
   ]
 
   return (

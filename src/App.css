@@ -1969,18 +1969,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    gap: 6px;
+    padding: 8px 4px;
     border-radius: var(--radius-md);
-    min-width: 60px;
+    min-width: 64px;
+    min-height: 56px;
     background: transparent;
     transition: all 0.3s ease;
+    touch-action: manipulation;
   }
   
   .tab-btn.active {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     transform: translateY(-2px);
+  }
+
+  .tab-btn.active .tab-label {
+    color: white;
+    opacity: 1;
+    font-weight: 700;
   }
   
   .tab-icon {
@@ -1989,10 +1997,12 @@ body {
   }
   
   .tab-label {
-    font-size: 10px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
     text-align: center;
-    line-height: 1;
+    line-height: 1.2;
+    color: var(--text-primary);
+    opacity: 0.8;
   }
   
   /* Add bottom padding to dashboard content to account for fixed bottom nav */
@@ -2012,6 +2022,16 @@ body {
   
   [data-theme="dark"] .tab-btn.active {
     color: white;
+  }
+
+  [data-theme="dark"] .tab-btn .tab-label {
+    color: var(--dark-text-secondary);
+    opacity: 0.9;
+  }
+
+  [data-theme="dark"] .tab-btn.active .tab-label {
+    color: white;
+    opacity: 1;
   }
   
   .expense-item-modern {
