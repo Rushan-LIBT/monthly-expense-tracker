@@ -976,9 +976,27 @@ body {
     padding: var(--spacing-md);
   }
   
-  .tab-button {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-xs);
+  /* Ultra-compact navigation for small phones */
+  .dashboard-tabs {
+    padding: 6px 4px;
+  }
+  
+  .tab-btn {
+    min-width: 50px;
+    padding: 6px 4px;
+    gap: 2px;
+  }
+  
+  .tab-icon {
+    font-size: var(--font-size-base);
+  }
+  
+  .tab-label {
+    font-size: 8px;
+  }
+  
+  .dashboard {
+    padding-bottom: 75px;
   }
   
   .salary-manager {
@@ -1861,22 +1879,139 @@ body {
     grid-template-columns: 1fr;
   }
   
+  /* MOBILE NAVIGATION OPTION 1: Bottom Tab Bar (iOS/Android Style) - CURRENT */
   .dashboard-tabs {
-    justify-content: center;
-    flex-wrap: wrap;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-sm);
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+  
+  /* ALTERNATIVE OPTION 2: Horizontal Scrollable (uncomment to use)
+  .dashboard-tabs {
+    display: flex;
     gap: var(--spacing-xs);
+    background: var(--background);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-xl);
     margin-bottom: var(--spacing-lg);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    box-shadow: var(--shadow-md);
+  }
+  .dashboard-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  */
+  
+  /* ALTERNATIVE OPTION 3: Grid Layout (uncomment to use)
+  .dashboard-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs);
+    background: var(--background);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  .tab-btn:nth-child(4), .tab-btn:nth-child(5) {
+    grid-column: span 1;
+  }
+  .tab-btn:nth-child(4) {
+    justify-self: end;
+  }
+  .tab-btn:nth-child(5) {
+    justify-self: start;
+  }
+  */
+  
+  /* ALTERNATIVE OPTION 4: Compact Pills (uncomment to use)
+  .dashboard-tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: var(--background);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-2xl);
+    margin: 0 var(--spacing-md) var(--spacing-lg);
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: var(--shadow-lg);
+  }
+  .tab-btn {
+    flex: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    flex-direction: row;
+    gap: 6px;
+  }
+  .tab-icon {
+    font-size: var(--font-size-sm);
+  }
+  .tab-label {
+    font-size: var(--font-size-xs);
+  }
+  */
+  
+  .tab-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    min-width: 60px;
+    background: transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .tab-icon {
+    font-size: var(--font-size-lg);
+    margin-bottom: 2px;
   }
   
   .tab-label {
-    display: none;
+    font-size: 10px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1;
   }
   
-  .tab-button {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-sm);
-    min-width: auto;
-    flex: none;
+  /* Add bottom padding to dashboard content to account for fixed bottom nav */
+  .dashboard {
+    padding-bottom: 90px;
+  }
+  
+  /* Dark mode support for mobile navigation */
+  [data-theme="dark"] .dashboard-tabs {
+    background: rgba(30, 41, 59, 0.95);
+    border-top: 1px solid var(--dark-border);
+  }
+  
+  [data-theme="dark"] .tab-btn {
+    color: var(--dark-text-secondary);
+  }
+  
+  [data-theme="dark"] .tab-btn.active {
+    color: white;
   }
   
   .expense-item-modern {
