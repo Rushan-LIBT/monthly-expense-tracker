@@ -1,6 +1,6 @@
-# Monthly Expense Tracker 💰
+# Rush Finance 💰
 
-A modern React application for tracking monthly expenses with MongoDB database, user authentication, and beautiful charts.
+A modern React application for smart expense tracking and budget management with MongoDB database, user authentication, and beautiful charts.
 
 ## ✨ Features
 
@@ -71,4 +71,4 @@ monthly-expense-tracker/
 - **ExpenseCharts** - Visual spending analytics
 - **ThemeToggle** - Dark/Light mode switcher
 
-Your Monthly Expense Tracker is ready to use! 🎉
+Your Rush Finance app is ready to use! 🎉

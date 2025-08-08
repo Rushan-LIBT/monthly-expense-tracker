@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { ThemeProvider } from './context/ThemeContext'
 import Auth from './components/Auth'
 import ExpenseTracker from './components/ExpenseTracker'
+import { API_URL } from './config/api'
 import './App.css'
 
 function AppContent() {
@@ -28,7 +29,7 @@ function AppContent() {
       if (savedToken && savedUser) {
         try {
           // Verify token is still valid by making a test request
-          const response = await fetch('http://localhost:3001/api/expenses', {
+          const response = await fetch(`${API_URL}/expenses`, {
             headers: {
               'Authorization': `Bearer ${savedToken}`
             }

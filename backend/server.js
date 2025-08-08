@@ -10,12 +10,25 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow all localhost origins for development
-    if (!origin || origin.startsWith('http://localhost:')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+    // Allow requests from Render deployed frontend, localhost for development, and direct API calls
+    const allowedOrigins = [
+      /^https:\/\/.*\.onrender\.com$/,  // Any Render subdomain
+      /^http:\/\/localhost:\d+$/,       // Local development
+      process.env.FRONTEND_URL          // Custom frontend URL
+    ].filter(Boolean);
+    
+    // Allow requests with no origin (mobile apps, API tools, etc.)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin matches any allowed pattern
+    const isAllowed = allowedOrigins.some(pattern => {
+      if (pattern instanceof RegExp) {
+        return pattern.test(origin);
+      }
+      return pattern === origin;
+    });
+    
+    callback(null, isAllowed);
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

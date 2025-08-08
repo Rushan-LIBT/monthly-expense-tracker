@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import ThemeToggle from './ThemeToggle'
-
-const API_URL = 'http://localhost:3001/api'
+import { API_URL } from '../config/api'
 
 function Auth({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true)

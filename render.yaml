@@ -1,0 +1,37 @@
+services:
+  # Backend API Service
+  - type: web
+    name: rush-finance-api
+    env: node
+    region: oregon
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromDatabase:
+          name: mongodb-atlas
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: rush-finance-app
+          property: host
+
+  # Frontend Static Site
+  - type: web
+    name: rush-finance-app
+    env: static
+    region: oregon
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: rush-finance-api
+          envVarKey: RENDER_EXTERNAL_URL

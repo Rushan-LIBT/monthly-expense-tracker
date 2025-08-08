@@ -1,18 +1,19 @@
 {
-  "name": "backend",
+  "name": "rush-finance-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Rush Finance Backend API - Expense tracking with MongoDB",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node server.js",
-    "start-local": "node server-simple.js",
     "dev": "nodemon server.js",
-    "dev-local": "nodemon server-simple.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["expense-tracker", "mongodb", "api", "nodejs"],
+  "author": "Rushan",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",

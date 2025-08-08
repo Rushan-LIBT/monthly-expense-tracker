@@ -6,8 +6,7 @@ import ExpenseForm from './ExpenseForm'
 import ExpenseList from './ExpenseList'
 import SummaryCards from './SummaryCards'
 import SalaryManager from './SalaryManager'
-
-const API_URL = 'http://localhost:3001/api'
+import { API_URL } from '../config/api'
 
 function Dashboard({ user, token, onLogout }) {
   const [expenses, setExpenses] = useState([])
@@ -115,7 +114,7 @@ function Dashboard({ user, token, onLogout }) {
     <div className="dashboard">
       <div className="dashboard-header">
         <div className="dashboard-title">
-          <h1>💰 Financial Dashboard</h1>
+          <h1>💰 Rush Finance Dashboard</h1>
           <p>Welcome back, <span className="user-highlight">{currentUser.username}</span>!</p>
         </div>
         <div className="dashboard-actions">
