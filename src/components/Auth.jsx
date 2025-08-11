@@ -134,235 +134,7 @@ function Auth({ onLogin }) {
         <div className="shape shape-3"></div>
       </div>
       
-      {/* Desktop Split Layout */}
-      <div className="auth-desktop-layout">
-        {/* Left Side - Hero/Branding */}
-        <div className="auth-hero-section">
-          <div className="hero-content">
-            <div className="hero-brand">
-              <div className="hero-logo">
-                <div className="logo-icon-large">💰</div>
-                <div className="logo-rings">
-                  <div className="ring ring-1"></div>
-                  <div className="ring ring-2"></div>
-                  <div className="ring ring-3"></div>
-                </div>
-              </div>
-              <h1 className="hero-title">Rush Finance</h1>
-              <p className="hero-subtitle">Take control of your financial future with intelligent expense tracking and budgeting tools</p>
-            </div>
-            
-            <div className="hero-features">
-              <div className="hero-feature">
-                <div className="feature-icon-large">📊</div>
-                <div className="feature-content">
-                  <h3>Smart Analytics</h3>
-                  <p>Visualize your spending patterns with interactive charts and insights</p>
-                </div>
-              </div>
-              <div className="hero-feature">
-                <div className="feature-icon-large">💰</div>
-                <div className="feature-content">
-                  <h3>Budget Management</h3>
-                  <p>Set budgets and track your progress with real-time notifications</p>
-                </div>
-              </div>
-              <div className="hero-feature">
-                <div className="feature-icon-large">🔒</div>
-                <div className="feature-content">
-                  <h3>Secure & Private</h3>
-                  <p>Your financial data is encrypted and stored securely</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="hero-stats">
-              <div className="stat">
-                <div className="stat-number">10K+</div>
-                <div className="stat-label">Active Users</div>
-              </div>
-              <div className="stat">
-                <div className="stat-number">$2M+</div>
-                <div className="stat-label">Money Tracked</div>
-              </div>
-              <div className="stat">
-                <div className="stat-number">4.9★</div>
-                <div className="stat-label">User Rating</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side - Form */}
-        <div className="auth-form-section">
-          <ThemeToggle isAuth={true} />
-          
-          <div className="auth-card-desktop">
-            <div className="auth-header">
-              <h2 className="auth-title">
-                {isLogin ? 'Welcome Back!' : 'Join Rush Finance'}
-              </h2>
-              <p className="auth-description">
-                {isLogin 
-                  ? 'Sign in to continue your financial journey' 
-                  : 'Start your journey to financial freedom'
-                }
-              </p>
-            </div>
-
-            <div className="auth-tabs">
-              <button 
-                type="button"
-                className={`auth-tab ${isLogin ? 'active' : ''}`}
-                onClick={() => isLogin || toggleAuthMode()}
-              >
-                Sign In
-              </button>
-              <button 
-                type="button"
-                className={`auth-tab ${!isLogin ? 'active' : ''}`}
-                onClick={() => !isLogin || toggleAuthMode()}
-              >
-                Sign Up
-              </button>
-              <div className="tab-indicator" style={{
-                transform: `translateX(${isLogin ? '0%' : '100%'})`
-              }}></div>
-            </div>
-
-            <div className="auth-form-container">
-              <div className={`auth-form-wrapper ${isLogin ? 'login-mode' : 'signup-mode'}`}>
-                
-                {error && (
-                  <div className="error-alert">
-                    <div className="error-icon">⚠️</div>
-                    <span>{error}</span>
-                  </div>
-                )}
-                
-                <form onSubmit={handleSubmit} className="auth-form-new">
-                  {!isLogin && (
-                    <div className="form-field">
-                      <label htmlFor="username" className="field-label">Username</label>
-                      <div className="field-container">
-                        <div className="field-icon">👤</div>
-                        <input
-                          id="username"
-                          type="text"
-                          name="username"
-                          placeholder="Choose a username"
-                          value={formData.username}
-                          onChange={handleChange}
-                          className={`field-input ${validationErrors.username ? 'error' : ''}`}
-                          required={!isLogin}
-                        />
-                      </div>
-                      {validationErrors.username && (
-                        <span className="field-error">{validationErrors.username}</span>
-                      )}
-                    </div>
-                  )}
-                  
-                  <div className="form-field">
-                    <label htmlFor="email" className="field-label">Email Address</label>
-                    <div className="field-container">
-                      <div className="field-icon">📧</div>
-                      <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={`field-input ${validationErrors.email ? 'error' : ''}`}
-                        required
-                      />
-                    </div>
-                    {validationErrors.email && (
-                      <span className="field-error">{validationErrors.email}</span>
-                    )}
-                  </div>
-                  
-                  <div className="form-field">
-                    <label htmlFor="password" className="field-label">Password</label>
-                    <div className="field-container">
-                      <div className="field-icon">🔒</div>
-                      <input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        placeholder="Enter your password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className={`field-input ${validationErrors.password ? 'error' : ''}`}
-                        required
-                      />
-                      <button
-                        type="button"
-                        className="password-toggle"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? '🙈' : '👁️'}
-                      </button>
-                    </div>
-                    {validationErrors.password && (
-                      <span className="field-error">{validationErrors.password}</span>
-                    )}
-                  </div>
-
-                  <button 
-                    type="submit" 
-                    disabled={loading} 
-                    className={`auth-submit ${loading ? 'loading' : ''}`}
-                  >
-                    <div className="submit-content">
-                      {loading ? (
-                        <LoadingSpinner 
-                          type="auth" 
-                          size="medium" 
-                          text={isLogin ? 'Signing In...' : 'Creating Account...'} 
-                        />
-                      ) : (
-                        <>
-                          <span className="submit-text">
-                            {isLogin ? 'Sign In' : 'Create Account'}
-                          </span>
-                          <div className="submit-icon">
-                            {isLogin ? '🚀' : '✨'}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </button>
-                </form>
-
-                {isLogin && (
-                  <div className="demo-section">
-                    <div className="demo-divider">
-                      <span>Try Demo</span>
-                    </div>
-                    <button 
-                      type="button"
-                      onClick={demoLogin}
-                      className="demo-btn"
-                      disabled={loading}
-                    >
-                      <div className="demo-icon">🎮</div>
-                      <span>Quick Demo Login</span>
-                    </button>
-                    <p className="demo-info">
-                      Experience all features with sample data
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Layout (unchanged) */}
-      <div className="auth-content auth-mobile-only">
+      <div className="auth-content">
         <div className="auth-card">
           <ThemeToggle isAuth={true} />
           
@@ -395,8 +167,8 @@ function Auth({ onLogin }) {
             }}></div>
           </div>
 
-          <div className="auth-form-container">
-            <div className={`auth-form-wrapper ${isLogin ? 'login-mode' : 'signup-mode'}`}>
+          <div className={`auth-form-wrapper ${isLogin ? 'login-mode' : 'signup-mode'}`}>
+            <div className="auth-form-container">
               
               {error && (
                 <div className="error-alert">
@@ -412,7 +184,7 @@ function Auth({ onLogin }) {
                     <div className="field-container">
                       <div className="field-icon">👤</div>
                       <input
-                        id="username-mobile"
+                        id="username"
                         type="text"
                         name="username"
                         placeholder="Choose a username"
@@ -433,7 +205,7 @@ function Auth({ onLogin }) {
                   <div className="field-container">
                     <div className="field-icon">📧</div>
                     <input
-                      id="email-mobile"
+                      id="email"
                       type="email"
                       name="email"
                       placeholder="Enter your email"
@@ -453,7 +225,7 @@ function Auth({ onLogin }) {
                   <div className="field-container">
                     <div className="field-icon">🔒</div>
                     <input
-                      id="password-mobile"
+                      id="password"
                       type={showPassword ? "text" : "password"}
                       name="password"
                       placeholder="Enter your password"
