@@ -1,7 +1,7 @@
 // API Configuration for development and production
 const API_CONFIG = {
   // Production API URL (your actual deployed backend)
-  PRODUCTION_API_URL: process.env.VITE_API_URL || 'https://finance-backend-iela.onrender.com/api',
+  PRODUCTION_API_URL: import.meta.env.VITE_API_URL || 'https://finance-backend-iela.onrender.com/api',
   
   // Development API URL
   DEVELOPMENT_API_URL: 'http://localhost:3001/api'

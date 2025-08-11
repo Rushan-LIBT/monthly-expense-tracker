@@ -34,6 +34,7 @@ function Dashboard({ user, token, onLogout }) {
 
   useEffect(() => {
     fetchExpenses()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const addExpense = async (expenseData) => {
@@ -135,6 +136,9 @@ function Dashboard({ user, token, onLogout }) {
           </div>
           <div className="header-right">
             <div className="header-controls">
+              <button className="quick-add-expense-btn" style={{ marginRight: 12 }} onClick={() => setActiveTab('add-expense')}>
+                <span className="icon">➕</span> Add Expense
+              </button>
               <ThemeToggle />
               <button className="logout-btn-new" onClick={onLogout}>
                 <span className="logout-icon">🚪</span>
