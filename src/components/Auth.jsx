@@ -48,7 +48,6 @@ function Auth({ onLogin }) {
       [name]: value
     }))
     
-    // Clear validation error when user starts typing
     if (validationErrors[name]) {
       setValidationErrors(prev => ({
         ...prev,
@@ -56,7 +55,6 @@ function Auth({ onLogin }) {
       }))
     }
     
-    // Clear general error
     if (error) setError('')
   }
 
@@ -105,7 +103,6 @@ function Auth({ onLogin }) {
       password: 'password123'
     })
     
-    // Small delay for visual feedback
     setTimeout(() => {
       setLoading(true)
       axios.post(`${API_URL}/login`, {
@@ -135,180 +132,221 @@ function Auth({ onLogin }) {
       </div>
       
       <div className="auth-content">
-        <div className="auth-card">
-          <ThemeToggle isAuth={true} />
-          
-          <div className="auth-brand">
-            <div className="brand-logo">
-              <div className="logo-icon">💰</div>
-              <div className="logo-animation"></div>
+        {/* Left Hero Section */}
+        <div className="auth-hero-section">
+          <div className="hero-content">
+            <div className="hero-brand">
+              <div className="hero-logo">
+                <div className="logo-icon-large">💰</div>
+                <div className="logo-rings">
+                  <div className="ring ring-1"></div>
+                  <div className="ring ring-2"></div>
+                  <div className="ring ring-3"></div>
+                </div>
+              </div>
+              <h1 className="hero-title">Rush Finance</h1>
+              <p className="hero-subtitle">Transform your financial future with intelligent expense tracking and powerful analytics</p>
             </div>
-            <h1 className="brand-title">Rush Finance</h1>
-            <p className="brand-tagline">Smart expense tracking made simple</p>
-          </div>
 
-          <div className="auth-tabs">
-            <button 
-              type="button"
-              className={`auth-tab ${isLogin ? 'active' : ''}`}
-              onClick={() => isLogin || toggleAuthMode()}
-            >
-              Sign In
-            </button>
-            <button 
-              type="button"
-              className={`auth-tab ${!isLogin ? 'active' : ''}`}
-              onClick={() => !isLogin || toggleAuthMode()}
-            >
-              Sign Up
-            </button>
-            <div className="tab-indicator" style={{
-              transform: `translateX(${isLogin ? '0%' : '100%'})`
-            }}></div>
-          </div>
+            <div className="hero-features">
+              <div className="hero-feature">
+                <div className="feature-icon-large">📊</div>
+                <div className="feature-content">
+                  <h3>Smart Analytics</h3>
+                  <p>AI-powered insights into your spending patterns and financial habits</p>
+                </div>
+              </div>
+              <div className="hero-feature">
+                <div className="feature-icon-large">💰</div>
+                <div className="feature-content">
+                  <h3>Budget Management</h3>
+                  <p>Set intelligent budgets and receive real-time notifications</p>
+                </div>
+              </div>
+              <div className="hero-feature">
+                <div className="feature-icon-large">🔒</div>
+                <div className="feature-content">
+                  <h3>Bank-Level Security</h3>
+                  <p>Your data is protected with enterprise-grade encryption</p>
+                </div>
+              </div>
+            </div>
 
-          <div className={`auth-form-wrapper ${isLogin ? 'login-mode' : 'signup-mode'}`}>
-            <div className="auth-form-container">
-              
-              {error && (
-                <div className="error-alert">
-                  <div className="error-icon">⚠️</div>
-                  <span>{error}</span>
-                </div>
-              )}
-              
-              <form onSubmit={handleSubmit} className="auth-form-new">
-                {!isLogin && (
-                  <div className="form-field">
-                    <label htmlFor="username" className="field-label">Username</label>
-                    <div className="field-container">
-                      <div className="field-icon">👤</div>
-                      <input
-                        id="username"
-                        type="text"
-                        name="username"
-                        placeholder="Choose a username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        className={`field-input ${validationErrors.username ? 'error' : ''}`}
-                        required={!isLogin}
-                      />
-                    </div>
-                    {validationErrors.username && (
-                      <span className="field-error">{validationErrors.username}</span>
-                    )}
-                  </div>
-                )}
-                
-                <div className="form-field">
-                  <label htmlFor="email" className="field-label">Email Address</label>
-                  <div className="field-container">
-                    <div className="field-icon">📧</div>
-                    <input
-                      id="email"
-                      type="email"
-                      name="email"
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={`field-input ${validationErrors.email ? 'error' : ''}`}
-                      required
-                    />
-                  </div>
-                  {validationErrors.email && (
-                    <span className="field-error">{validationErrors.email}</span>
-                  )}
-                </div>
-                
-                <div className="form-field">
-                  <label htmlFor="password" className="field-label">Password</label>
-                  <div className="field-container">
-                    <div className="field-icon">🔒</div>
-                    <input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Enter your password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      className={`field-input ${validationErrors.password ? 'error' : ''}`}
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="password-toggle"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? '🙈' : '👁️'}
-                    </button>
-                  </div>
-                  {validationErrors.password && (
-                    <span className="field-error">{validationErrors.password}</span>
-                  )}
-                </div>
-
-                <button 
-                  type="submit" 
-                  disabled={loading} 
-                  className={`auth-submit ${loading ? 'loading' : ''}`}
-                >
-                  <div className="submit-content">
-                    {loading ? (
-                      <LoadingSpinner 
-                        type="auth" 
-                        size="medium" 
-                        text={isLogin ? 'Signing In...' : 'Creating Account...'} 
-                      />
-                    ) : (
-                      <>
-                        <span className="submit-text">
-                          {isLogin ? 'Sign In' : 'Create Account'}
-                        </span>
-                        <div className="submit-icon">
-                          {isLogin ? '🚀' : '✨'}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </button>
-              </form>
-
-              {isLogin && (
-                <div className="demo-section">
-                  <div className="demo-divider">
-                    <span>Try Demo</span>
-                  </div>
-                  <button 
-                    type="button"
-                    onClick={demoLogin}
-                    className="demo-btn"
-                    disabled={loading}
-                  >
-                    <div className="demo-icon">🎮</div>
-                    <span>Quick Demo Login</span>
-                  </button>
-                  <p className="demo-info">
-                    Experience all features with sample data
-                  </p>
-                </div>
-              )}
+            <div className="hero-stats">
+              <div className="stat">
+                <div className="stat-number">50K+</div>
+                <div className="stat-label">Active Users</div>
+              </div>
+              <div className="stat">
+                <div className="stat-number">$2M+</div>
+                <div className="stat-label">Money Tracked</div>
+              </div>
+              <div className="stat">
+                <div className="stat-number">99.9%</div>
+                <div className="stat-label">Uptime</div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="auth-footer">
-          <div className="feature-highlights">
-            <div className="feature">
-              <div className="feature-icon">📊</div>
-              <span>Smart Analytics</span>
+        {/* Right Form Section */}
+        <div className="auth-form-section">
+          <ThemeToggle isAuth={true} />
+          
+          <div className="auth-card">
+            <div className="auth-header">
+              <h2 className="auth-title">{isLogin ? 'Welcome Back' : 'Join Rush Finance'}</h2>
+              <p className="auth-description">
+                {isLogin ? 'Sign in to your account' : 'Create your account to get started'}
+              </p>
             </div>
-            <div className="feature">
-              <div className="feature-icon">💰</div>
-              <span>Budget Tracking</span>
+
+            <div className="auth-tabs">
+              <button 
+                type="button"
+                className={`auth-tab ${isLogin ? 'active' : ''}`}
+                onClick={() => isLogin || toggleAuthMode()}
+              >
+                Sign In
+              </button>
+              <button 
+                type="button"
+                className={`auth-tab ${!isLogin ? 'active' : ''}`}
+                onClick={() => !isLogin || toggleAuthMode()}
+              >
+                Sign Up
+              </button>
+              <div className="tab-indicator" style={{
+                transform: `translateX(${isLogin ? '0%' : '100%'})`
+              }}></div>
             </div>
-            <div className="feature">
-              <div className="feature-icon">🔒</div>
-              <span>Secure & Private</span>
+
+            <div className={`auth-form-wrapper ${isLogin ? 'login-mode' : 'signup-mode'}`}>
+              <div className="auth-form-container">
+                
+                {error && (
+                  <div className="error-alert">
+                    <div className="error-icon">⚠️</div>
+                    <span>{error}</span>
+                  </div>
+                )}
+                
+                <form onSubmit={handleSubmit} className="auth-form-new">
+                  {!isLogin && (
+                    <div className="form-field">
+                      <label htmlFor="username" className="field-label">Username</label>
+                      <div className="field-container">
+                        <div className="field-icon">👤</div>
+                        <input
+                          id="username"
+                          type="text"
+                          name="username"
+                          placeholder="Choose a username"
+                          value={formData.username}
+                          onChange={handleChange}
+                          className={`field-input ${validationErrors.username ? 'error' : ''}`}
+                          required={!isLogin}
+                        />
+                      </div>
+                      {validationErrors.username && (
+                        <span className="field-error">{validationErrors.username}</span>
+                      )}
+                    </div>
+                  )}
+                  
+                  <div className="form-field">
+                    <label htmlFor="email" className="field-label">Email Address</label>
+                    <div className="field-container">
+                      <div className="field-icon">📧</div>
+                      <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={`field-input ${validationErrors.email ? 'error' : ''}`}
+                        required
+                      />
+                    </div>
+                    {validationErrors.email && (
+                      <span className="field-error">{validationErrors.email}</span>
+                    )}
+                  </div>
+                  
+                  <div className="form-field">
+                    <label htmlFor="password" className="field-label">Password</label>
+                    <div className="field-container">
+                      <div className="field-icon">🔒</div>
+                      <input
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className={`field-input ${validationErrors.password ? 'error' : ''}`}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? '🙈' : '👁️'}
+                      </button>
+                    </div>
+                    {validationErrors.password && (
+                      <span className="field-error">{validationErrors.password}</span>
+                    )}
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    disabled={loading} 
+                    className={`auth-submit ${loading ? 'loading' : ''}`}
+                  >
+                    <div className="submit-content">
+                      {loading ? (
+                        <LoadingSpinner 
+                          type="auth" 
+                          size="medium" 
+                          text={isLogin ? 'Signing In...' : 'Creating Account...'} 
+                        />
+                      ) : (
+                        <>
+                          <span className="submit-text">
+                            {isLogin ? 'Sign In' : 'Create Account'}
+                          </span>
+                          <div className="submit-icon">
+                            {isLogin ? '🚀' : '✨'}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </button>
+                </form>
+
+                {isLogin && (
+                  <div className="demo-section">
+                    <div className="demo-divider">
+                      <span>Try Demo</span>
+                    </div>
+                    <button 
+                      type="button"
+                      onClick={demoLogin}
+                      className="demo-btn"
+                      disabled={loading}
+                    >
+                      <div className="demo-icon">🎮</div>
+                      <span>Quick Demo Login</span>
+                    </button>
+                    <p className="demo-info">
+                      Experience all features with sample data
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
